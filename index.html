@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QORVEX Sequence</title>
+<link rel="stylesheet" href="css/theme.css?v=2026-11-08-2200">
+<link rel="stylesheet" href="css/fondo.css?v=2026-11-08-2200">
+</head>
+<body>
+
+<!-- ===== Acceso: fondo del wallpaper + tarjeta ===== -->
+<div id="acceso" class="acceso" hidden>
+  <div class="acceso-card">
+    <div class="marca">
+      <div class="wordmark"><span class="qmark">Q</span><span class="wm-txt">QORVEX</span></div>
+      <div class="modo">SEQUENCE</div>
+    </div>
+
+    <section id="view-start" class="view paso" hidden>
+      <h2>Carpeta de trabajo</h2>
+      <p class="ayuda">Primer uso en esta PC: elige la carpeta de trabajo. Ahí se guardan usuarios, configuración, respaldos, impresiones y Base de ítems.xlsm.</p>
+      <div id="remembered" hidden>
+        <p class="ayuda">Carpeta anterior: <b id="remembered-name"></b></p>
+        <button class="btn-primario" id="btn-continue">Continuar en esta carpeta</button>
+        <button class="btn-secundario" id="btn-pick-root">Elegir otra</button>
+      </div>
+      <div id="pick-root-wrap"><button class="btn-primario" id="btn-pick-root2">Elegir carpeta de trabajo</button></div>
+      <span id="folder-status" class="status"></span>
+    </section>
+
+    <section id="view-login" class="view paso" hidden>
+      <h2 id="login-title">Inicio de sesión</h2>
+      <p class="ayuda" id="login-hint"></p>
+      <form id="login-form" autocomplete="on">
+        <label class="etiqueta" for="user-name">No. de empleado</label>
+        <input id="user-name" class="campo" autocomplete="username" required>
+        <div id="campo-nombre" hidden>
+          <label class="etiqueta" for="user-nombre">Nombre</label>
+          <input id="user-nombre" class="campo" autocomplete="name">
+        </div>
+        <label class="etiqueta" for="user-pass">Contraseña (mín. 4)</label>
+        <input id="user-pass" type="password" class="campo" autocomplete="current-password" required>
+        <div id="campo-confirmar" hidden>
+          <label class="etiqueta" for="user-pass2">Confirmar contraseña</label>
+          <input id="user-pass2" type="password" class="campo" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn-primario" id="btn-login">Entrar</button>
+      </form>
+      <span id="login-status" class="status"></span>
+    </section>
+  </div>
+  <footer class="pie"><span id="reloj"></span><span>QORVEX · Desarrollado por <b>CH Industrial Solutions</b></span></footer>
+</div>
+
+<!-- ===== Aplicación ===== -->
+<div id="app" hidden>
+  <header class="top">
+    <div class="barra">
+      <div class="logo-box"><img src="assets/logo-light.png" alt="CH Industrial Solutions"></div>
+      <div class="marca-app">
+        <div class="nombre-app"><span class="resalta">QORVEX</span> Sequence</div>
+        <div class="tagline">Eficiencia · Control · Resultados</div>
+      </div>
+      <div class="dato-top">
+        <svg viewBox="0 0 24 24" class="ico-top" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
+        <div><small>Usuario</small><b id="hdr-usuario"></b><small id="hdr-carpeta"></small></div>
+      </div>
+      <div class="dato-top">
+        <svg viewBox="0 0 24 24" class="ico-top" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18 M8 3v4 M16 3v4"/></svg>
+        <div><small>Fecha</small><b id="hdr-fecha"></b><small>Hora <span id="hdr-hora"></span></small></div>
+      </div>
+      <div class="dato-top en-linea"><i class="punto"></i><div><small>Sistema</small><b>En línea</b></div></div>
+      <button id="btn-salir" class="salir-btn">Salir</button>
+    </div>
+    <nav class="tabs" id="nav">
+      <button data-tab="inicio" class="tab">Inicio</button>
+      <button data-tab="operaciones" class="tab">Operaciones</button>
+      <button data-tab="bdata" class="tab">Bases de datos</button>
+      <button data-tab="reportes" class="tab">Reportes</button>
+      <button data-tab="config" class="tab">Configuración</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Inicio: accesos rápidos, configuración de entrada, vista previa y resúmenes -->
+    <section id="view-inicio" class="view" hidden>
+      <div class="grid-inicio">
+        <aside class="col-izq">
+          <h3 class="sec-tit"><svg viewBox="0 0 24 24" class="ico-sec" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> Accesos Rápidos</h3>
+          <button class="acceso-rap" data-go="esqueletos">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M9 3h6v3H9z M7 5H5v16h14V5h-2 M8 11h8 M8 15h8 M8 19h5"/></svg>
+            <span><b>Imprimir Esqueletos</b><small>Esqueletos y pivot</small></span><i>›</i>
+          </button>
+          <button class="acceso-rap" data-go="etiquetas">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z M7.5 7.5h.01"/></svg>
+            <span><b>Imprimir Etiquetas</b><small>Etiquetas de materiales</small></span><i>›</i>
+          </button>
+          <button class="acceso-rap" data-go="bdata">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5 M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+            <span><b>Bases de datos</b><small>Base de ítems</small></span><i>›</i>
+          </button>
+          <button class="acceso-rap" data-go="reportes">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M4 20V10 M10 20V4 M16 20v-7 M3 20h18"/></svg>
+            <span><b>Reportes</b><small>Cruce, familias y pivot</small></span><i>›</i>
+          </button>
+          <button class="acceso-rap" id="btn-cruce">
+            <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M14 2H6v20h12V6z M14 2v4h4 M9 13h6 M9 17h4"/></svg>
+            <span><b>Cruzar jobs con el TXT</b><small>Busca los jobs en el TXT</small></span><i>›</i>
+          </button>
+        </aside>
+
+        <section class="col-centro">
+          <div class="cab-panel">
+            <svg viewBox="0 0 24 24" class="ico-cab" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            <div><h2>Configuración Rápida de Entrada</h2><p>Configure los parámetros y elija la secuencia a imprimir</p></div>
+          </div>
+          <div class="centro-grid">
+            <div class="form-panel">
+              <div class="campo-ico">
+                <svg viewBox="0 0 24 24" class="ico-campo" aria-hidden="true"><path d="M5 12a7 7 0 0 1 14 0 M8 12a4 4 0 0 1 8 0 M12 12v8"/></svg>
+                <div class="campo-txt"><label class="etiqueta" for="q-router">Router</label><select id="q-router"></select></div>
+              </div>
+              <div class="campo-ico">
+                <svg viewBox="0 0 24 24" class="ico-campo" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                <div class="campo-txt"><label class="etiqueta" for="q-capacidad">Facilidad (jobs por esqueleto)</label><select id="q-capacidad"></select></div>
+              </div>
+              <div class="campo-ico">
+                <svg viewBox="0 0 24 24" class="ico-campo" aria-hidden="true"><path d="M3 20V9l6 4V9l6 4V5h6v15z"/></svg>
+                <div class="campo-txt"><label class="etiqueta" for="q-linea">Línea de producción</label><select id="q-linea"><option value="1">Línea 1</option><option value="2">Línea 2</option></select></div>
+              </div>
+              <div class="campo-ico">
+                <svg viewBox="0 0 24 24" class="ico-campo" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5z M2 13l10 5 10-5"/></svg>
+                <div class="campo-txt"><label class="etiqueta" for="q-familia">Secuencia disponible</label><select id="q-familia"></select></div>
+              </div>
+              <div class="fila-botones">
+                <button class="secondary" id="q-restablecer">Restablecer</button>
+                <button id="q-aplicar">Aplicar configuración</button>
+              </div>
+              <p class="pq-info" id="q-info"></p>
+              <span id="q-status" class="status"></span>
+            </div>
+
+            <div class="preview-panel">
+              <div class="cab-prev"><svg viewBox="0 0 24 24" class="ico-campo" aria-hidden="true"><path d="M6 2h9l5 5v15H6z M14 2v6h6"/></svg> Vista previa de la secuencia</div>
+              <div class="ticket" id="prev-body"></div>
+            </div>
+          </div>
+          <div class="acciones-impresion">
+            <button id="q-generar">Generar e imprimir esqueletos</button>
+          </div>
+          <p class="aviso-base" id="inicio-aviso"></p>
+        </section>
+
+        <aside class="col-der">
+          <div class="panel-res">
+            <h3>Resumen de operación</h3>
+            <div class="fila-res"><span>Jobs cruzados</span><b id="res-jobs">0</b></div>
+            <div class="fila-res"><span>Familias disponibles</span><b id="res-familias">0</b></div>
+            <div class="fila-res"><span>Esqueletos (carta)</span><b id="res-esq">0</b></div>
+            <div class="fila-res"><span>Etiquetas</span><b id="res-etq">0</b></div>
+            <div class="fila-res"><span>Impresiones realizadas</span><b id="res-imp">0</b></div>
+          </div>
+          <div class="panel-res">
+            <h3>Estado del sistema</h3>
+            <div class="fila-res"><span>Base de ítems</span><b class="chip-est" id="sys-base">—</b></div>
+            <div class="fila-res"><span>Cruce con TXT</span><b class="chip-est" id="sys-cruce">—</b></div>
+            <div class="fila-res"><span>Impresora</span><b class="chip-est ok">Diálogo de Edge</b></div>
+            <div class="fila-res"><span>Última impresión</span><b id="sys-ult">—</b></div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="panel-res cruce-panel cruce-bajo">
+        <h3>Resultado del cruce con el TXT</h3>
+        <p class="muted" id="load-info"></p>
+        <span id="load-status" class="status"></span>
+        <div id="load-result"><p class="muted">Pulsa «Cruzar jobs con el TXT» en Accesos Rápidos para ver el resultado aquí.</p></div>
+      </div>
+    </section>
+
+    <!-- Operaciones: jobs, routers y cruce -->
+    <section id="view-operaciones" class="view" hidden>
+      <h2 class="titulo-vista">Operaciones</h2>
+      <div class="card">
+        <h3>Jobs y lineset</h3>
+        <p class="muted">Copia en Excel las columnas <b>Job</b> y <b>Lineset</b> (hasta 1000 filas) y pégalas aquí. El job puede venir como <b>2-520202</b>; el número antes del guion es la línea.</p>
+        <div class="fila-botones">
+          <button id="btn-clip">Pegar desde portapapeles</button>
+          <button class="secondary" id="btn-plan-clear">Limpiar</button>
+        </div>
+        <textarea id="plan-paste" rows="5" placeholder="Haz clic aquí y presiona Ctrl+V"></textarea>
+        <p class="muted" id="plan-count"></p>
+        <span id="plan-status" class="status"></span>
+        <div class="table-wrap" hidden id="plan-wrap">
+          <table><thead><tr><th>#</th><th>Línea</th><th>Job</th><th>Lineset</th></tr></thead><tbody id="plan-rows"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reportes -->
+    <section id="view-reportes" class="view" hidden>
+      <div class="cabeza-vista"><button class="volver" data-go="inicio">‹ Inicio</button><h2 class="titulo-vista">Reportes</h2></div>
+      <div class="card">
+        <h3>Cruce</h3>
+        <div id="rep-cruce" class="muted"></div>
+      </div>
+      <div class="card">
+        <h3>Familias disponibles</h3>
+        <div class="table-wrap"><table><thead><tr><th>Familia</th><th>Filas</th><th>Piezas</th></tr></thead><tbody id="rep-familias"></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3>Pivot de la secuencia seleccionada</h3>
+        <p class="muted" id="rep-pivot-info"></p>
+        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Cantidad</th></tr></thead><tbody id="rep-pivot"></tbody></table></div>
+      </div>
+      <div class="card" id="rep-noenc-card" hidden>
+        <h3>Jobs no encontrados en el TXT</h3>
+        <p class="muted" id="rep-noenc"></p>
+      </div>
+    </section>
+
+    <!-- Esqueletos: vista previa + impresión -->
+    <section id="view-esqueletos" class="view" hidden>
+      <div class="cabeza-vista"><button class="volver" data-go="inicio">‹ Inicio</button><h2 class="titulo-vista">Imprimir Esqueletos</h2></div>
+      <div class="card">
+        <p class="muted" id="esq-info"></p>
+        <div class="fila-botones">
+          <button class="secondary" id="btn-vista-esq">Vista previa esqueletos</button>
+          <button class="secondary" id="btn-vista-pivot">Vista previa pivot</button>
+          <button id="btn-imprimir-esq">Imprimir esqueletos y pivot</button>
+        </div>
+        <span id="esq-status" class="status"></span>
+        <iframe id="pdf-vista" title="Vista previa del PDF" hidden style="width:100%;height:640px;border:1px solid #1f7ad0;border-radius:10px;margin-top:12px;background:#fff"></iframe>
+      </div>
+      <div class="card">
+        <h3>Pivot</h3>
+        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Cantidad</th></tr></thead><tbody id="esq-pivot"></tbody></table></div>
+      </div>
+      <div id="esq-preview"></div>
+    </section>
+
+    <!-- Etiquetas: vista previa + impresión -->
+    <section id="view-etiquetas" class="view" hidden>
+      <div class="cabeza-vista"><button class="volver" data-go="inicio">‹ Inicio</button><h2 class="titulo-vista">Imprimir Etiquetas</h2></div>
+      <div class="card">
+        <p class="muted" id="etq-info"></p>
+        <button id="btn-imprimir-etq">Imprimir etiquetas (PDF)</button>
+        <span id="etq-status" class="status"></span>
+      </div>
+      <div id="etq-preview"></div>
+    </section>
+
+    <!-- Base de ítems -->
+    <section id="view-bdata" class="view" hidden>
+      <div class="cabeza-vista"><button class="volver" data-go="inicio">‹ Inicio</button><h2 class="titulo-vista">Bases de Datos · Base de ítems</h2></div>
+      <div class="card">
+        <p class="muted">Se lee desde <b>Base de ítems.xlsm</b> en la carpeta de trabajo (hoja BData: A = ítem, B = descripción, C = familia).</p>
+        <button id="btn-base">Cargar Base de ítems.xlsm</button>
+        <span id="base-status" class="status"></span>
+        <div class="stats" id="base-stats"></div>
+        <input id="base-buscar" placeholder="Buscar ítem o familia">
+        <div class="table-wrap"><table><thead><tr><th>Ítem</th><th>Descripción</th><th>Familia</th></tr></thead><tbody id="base-rows"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- Configuración: carpetas, respaldos, usuarios -->
+    <section id="view-config" class="view" hidden>
+      <h2 class="titulo-vista">Configuración</h2>
+      <div class="card">
+        <h3>Routers</h3>
+        <p class="muted">Lee los routers del TXT y elige uno o varios. También puedes agregar uno que no aparezca.</p>
+        <button id="btn-read-routers">Leer routers del TXT</button>
+        <span id="index-status" class="status"></span>
+        <div class="add-row">
+          <input id="router-add" placeholder="Ej. Z36" maxlength="10">
+          <button class="secondary" id="btn-add-router">Agregar router</button>
+        </div>
+        <div class="grid-routers" id="router-chips"></div>
+        <p class="muted" id="router-selected"></p>
+      </div>
+      <div class="card">
+        <h3>Carpetas</h3>
+        <table class="tabla-carpetas">
+          <tbody>
+            <tr><th>Carpeta de trabajo</th><td id="cfg-root">—</td><td><button class="secondary" id="cfg-change-root">Cambiar</button></td></tr>
+            <tr><th>Carpeta de TXT</th><td id="cfg-txt">—</td><td><button class="secondary" id="cfg-change-txt">Cambiar</button></td></tr>
+            <tr><th>Respaldos</th><td id="cfg-resp">—</td><td><button class="secondary" id="cfg-change-resp">Cambiar</button></td></tr>
+            <tr><th>Impresiones (PDF)</th><td id="cfg-imp">—</td><td><button class="secondary" id="cfg-change-imp">Cambiar</button></td></tr>
+          </tbody>
+        </table>
+        <span id="cfg-status" class="status"></span>
+      </div>
+
+      <div class="card">
+        <h3>Formato de hoja</h3>
+        <p class="muted">Texto del pie de página y folio asignado por la empresa. En el texto, <b>{mes}</b> se reemplaza por el mes y año de impresión (por ejemplo, November 2026).</p>
+        <div class="add-row">
+          <input id="fmt-texto" placeholder="{mes} ESC" maxlength="60">
+          <input id="fmt-folio" placeholder="Folio, ej. FO-ESC-001" maxlength="30">
+        </div>
+        <p class="muted">Vista previa: <b id="fmt-vista">—</b></p>
+        <button id="btn-fmt-guardar">Guardar formato</button>
+        <span id="fmt-status" class="status"></span>
+      </div>
+
+      <div class="card">
+        <h3>Respaldos</h3>
+        <p class="muted">Se crea una copia automática de usuarios, configuración y registro cada vez que cambias algo aquí o en Inicio. También puedes respaldar ahora.</p>
+        <button class="secondary" id="btn-respaldar">Respaldar ahora</button>
+        <span id="resp-status" class="status"></span>
+      </div>
+
+      <div class="card">
+        <h3>Usuarios</h3>
+        <p class="muted" id="usr-sesion"></p>
+        <div class="table-wrap"><table><thead><tr><th>No. de empleado</th><th>Nombre</th><th>Rol</th></tr></thead><tbody id="usuarios-rows"></tbody></table></div>
+        <div id="admin-usuarios" hidden>
+          <h4>Dar de alta un usuario</h4>
+          <div class="form-grid">
+            <div><label class="etiqueta" for="alta-empleado">No. de empleado</label><input id="alta-empleado" class="campo"></div>
+            <div><label class="etiqueta" for="alta-nombre">Nombre</label><input id="alta-nombre" class="campo"></div>
+            <div><label class="etiqueta" for="alta-pass">Contraseña (mín. 4)</label><input id="alta-pass" type="password" class="campo"></div>
+            <div><label class="etiqueta" for="alta-rol">Rol</label>
+              <select id="alta-rol"><option value="operador">Operador</option><option value="admin">Administrador</option></select></div>
+          </div>
+          <button id="btn-alta">Dar de alta</button>
+
+          <h4>Restablecer contraseña</h4>
+          <div class="form-grid">
+            <div><label class="etiqueta" for="rst-empleado">No. de empleado</label><input id="rst-empleado" class="campo"></div>
+            <div><label class="etiqueta" for="rst-pass">Nueva contraseña (mín. 4)</label><input id="rst-pass" type="password" class="campo"></div>
+          </div>
+          <button class="secondary" id="btn-rst">Restablecer</button>
+        </div>
+        <span id="usr-status" class="status"></span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="estado">
+    <span id="estado-usuario"></span>
+    <span id="estado-fecha"></span>
+    <span id="estado-hora"></span>
+    <span class="en-linea"><i class="punto"></i>Sistema en línea</span>
+  </footer>
+</div>
+
+<script src="js/vendor/xlsx.full.min.js?v=2026-11-08-2200"></script>
+<script src="js/vendor/jspdf.umd.min.js?v=2026-11-08-2200"></script>
+<script src="js/vendor/jspdf.plugin.autotable.min.js?v=2026-11-08-2200"></script>
+<script src="js/qorvex.js?v=2026-11-08-2200"></script>
+</body>
+</html>
