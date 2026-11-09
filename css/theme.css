@@ -296,12 +296,13 @@ main { max-width: 1400px; padding: 16px 18px 90px; }
   .nombre-app { font-size: 24px; }
 }
 
-/* Cruce con el TXT: botón arriba, resumen compacto abajo */
-.cruce-panel #btn-cruce { width: 100%; margin-bottom: 10px; }
-.cruce-panel #load-info { margin: 0 0 6px; font-size: 12px; }
-.cruce-panel #load-result { margin-top: 10px; }
-.cruce-panel #load-result p { font-size: 12px; margin: 6px 0; }
-.cruce-panel #load-result .aviso { font-size: 12px; }
-.cruce-panel #load-result table { font-size: 12px; }
-.cruce-panel #load-result th { width: 42%; padding: 6px 6px 6px 0; vertical-align: top; font-size: 12px; }
-.cruce-panel #load-result td { padding: 6px 0; vertical-align: top; word-break: break-word; }
+/* Cruce con el TXT: botón en Accesos Rápidos, resultado al pie de Inicio */
+.cruce-bajo { margin-top: 16px; }
+.cruce-bajo h3 { margin-bottom: 6px; }
+.cruce-bajo #load-info { margin: 0 0 6px; font-size: 13px; }
+.cruce-bajo #load-result { margin-top: 10px; }
+.cruce-bajo #load-result p { font-size: 13px; margin: 6px 0; }
+.cruce-bajo #load-result .aviso { font-size: 13px; }
+.cruce-bajo #load-result table { font-size: 13px; width: 100%; max-width: 900px; }
+.cruce-bajo #load-result th { width: 240px; padding: 8px 12px 8px 0; vertical-align: top; text-align: left; }
+.cruce-bajo #load-result td { padding: 8px 0; vertical-align: top; word-break: break-word; }

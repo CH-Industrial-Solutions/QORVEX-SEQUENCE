@@ -1136,6 +1136,7 @@ $('btn-cruce').addEventListener('click', async () => {
     const { planeado, noEncontrados } = buildPlaneado(state.plan, matches, state.bdata);
     state.matches = matches;
     state.planeado = planeado;
+    state.cruceFecha = new Date();
     state.noEncontrados = noEncontrados;
     state.cruceRouters = rutasKey();
     state.familia = null;
@@ -1167,6 +1168,7 @@ $('btn-cruce').addEventListener('click', async () => {
   }
 });
 function renderCruceResultado(jobsOk) {
+  renderRangoFamilia();
   const fams = familiasDisponibles();
   let aviso = '';
   if (state.lineaConfirmada) {
@@ -1198,7 +1200,26 @@ $('load-result').addEventListener('click', async e => {
 });
 
 // ---- Inicio: configuración rápida de entrada ----
+// Rango por familia: router, familia, job inicio, job final y fecha del cruce (al pie de Inicio).
+function renderRangoFamilia() {
+  const cont = $('rango-tabla');
+  if (!cont) return;
+  if (!state.planeado.length) { cont.innerHTML = '<p class="muted">Haz el cruce para ver el rango por familia.</p>'; return; }
+  const grupos = new Map();
+  for (const r of state.planeado) {          // planeado ya viene en el orden del plan
+    const k = r.router + '|' + r.familia;
+    if (!grupos.has(k)) grupos.set(k, { router: r.router, familia: r.familia, inicio: r.job, final: r.job });
+    grupos.get(k).final = r.job;
+  }
+  const fecha = (state.cruceFecha || new Date()).toLocaleDateString('es-MX', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const filas = [...grupos.values()].sort((a, b) => a.familia.localeCompare(b.familia, 'es') || String(a.router).localeCompare(String(b.router)));
+  cont.innerHTML = `<table><thead><tr><th>Router</th><th>Familia</th><th>Job inicio</th><th>Job final</th><th>Fecha</th></tr></thead><tbody>${
+    filas.map(g => `<tr><td>${esc(g.router)}</td><td>${esc(g.familia)}</td><td>${esc(g.inicio)}</td><td>${esc(g.final)}</td><td>${fecha}</td></tr>`).join('')
+  }</tbody></table>`;
+}
+
 function renderInicio() {
+  renderRangoFamilia();
   $('inicio-aviso').textContent = state.bdata.size
     ? `Base de ítems cargada: ${nf(state.bdata.size)} ítems.`
     : 'Falta la Base de ítems: colócala en la carpeta de trabajo como "Base de ítems.xlsm" (ver Bases de datos).';
