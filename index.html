@@ -4,8 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QORVEX Sequence</title>
-<link rel="stylesheet" href="css/theme.css?v=2026-11-08-2200">
-<link rel="stylesheet" href="css/fondo.css?v=2026-11-08-2200">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('qorvex-tema')==='claro'?'claro':'oscuro';}catch(e){document.documentElement.dataset.theme='oscuro';}</script>
+<link rel="stylesheet" href="css/theme.css?v=2026-11-08-2220">
+<link rel="stylesheet" href="css/fondo.css?v=2026-11-08-2220">
+<link rel="stylesheet" href="css/marca.css?v=2026-11-08-2220">
+<link rel="stylesheet" href="css/tema-claro.css?v=2026-11-08-2220">
 </head>
 <body>
 
@@ -57,7 +60,7 @@
 <div id="app" hidden>
   <header class="top">
     <div class="barra">
-      <div class="logo-box"><img src="assets/logo-light.png" alt="CH Industrial Solutions"></div>
+      <div class="logo-box"><span class="marca-ch marca-ch-oscuro" role="img" aria-label="CH Industrial Solutions"></span><span class="marca-ch marca-ch-claro" role="img" aria-label="CH Industrial Solutions"></span></div>
       <div class="marca-app">
         <div class="nombre-app"><span class="resalta">QORVEX</span> Sequence</div>
         <div class="tagline">Eficiencia · Control · Resultados</div>
@@ -71,6 +74,7 @@
         <div><small>Fecha</small><b id="hdr-fecha"></b><small>Hora <span id="hdr-hora"></span></small></div>
       </div>
       <div class="dato-top en-linea"><i class="punto"></i><div><small>Sistema</small><b>En línea</b></div></div>
+      <button id="btn-tema" class="salir-btn" type="button">Tema claro</button>
       <button id="btn-salir" class="salir-btn">Salir</button>
     </div>
     <nav class="tabs" id="nav">
@@ -346,9 +350,9 @@
   </footer>
 </div>
 
-<script src="js/vendor/xlsx.full.min.js?v=2026-11-08-2200"></script>
-<script src="js/vendor/jspdf.umd.min.js?v=2026-11-08-2200"></script>
-<script src="js/vendor/jspdf.plugin.autotable.min.js?v=2026-11-08-2200"></script>
-<script src="js/qorvex.js?v=2026-11-08-2200"></script>
+<script src="js/vendor/xlsx.full.min.js?v=2026-11-08-2220"></script>
+<script src="js/vendor/jspdf.umd.min.js?v=2026-11-08-2220"></script>
+<script src="js/vendor/jspdf.plugin.autotable.min.js?v=2026-11-08-2220"></script>
+<script src="js/qorvex.js?v=2026-11-08-2220"></script>
 </body>
 </html>

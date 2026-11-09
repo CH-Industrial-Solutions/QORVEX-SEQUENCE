@@ -936,6 +936,15 @@ function resetSesion() {
   state.familia = null; state.resumen = state.pivot = state.bloques = state.etiquetas = null;
   $('plan-paste').value = '';
 }
+// ---- Tema oscuro / claro (un solo botón; la preferencia se recuerda en este navegador) ----
+function aplicarTema(t) {
+  document.documentElement.dataset.theme = t === 'claro' ? 'claro' : 'oscuro';
+  $('btn-tema').textContent = t === 'claro' ? 'Tema oscuro' : 'Tema claro';
+  try { localStorage.setItem('qorvex-tema', document.documentElement.dataset.theme); } catch (e) { /* sin almacenamiento: solo esta sesión */ }
+}
+$('btn-tema').addEventListener('click', () => aplicarTema(document.documentElement.dataset.theme === 'claro' ? 'oscuro' : 'claro'));
+aplicarTema(document.documentElement.dataset.theme);
+
 $('btn-salir').addEventListener('click', async () => {
   await safeLog('cierre_sesion');
   resetSesion();
